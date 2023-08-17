@@ -304,14 +304,14 @@ class WaybackMachineDownloader
       end
       semaphore.synchronize do
         @processed_file_count += 1
-        display_progress
         puts "#{file_url} -> #{file_path} (#{@processed_file_count}/#{file_list_by_timestamp.size})"
+        display_progress
       end
     else
       semaphore.synchronize do
         @processed_file_count += 1
-        display_progress
         puts "#{file_url} # #{file_path} already exists. (#{@processed_file_count}/#{file_list_by_timestamp.size})"
+        display_progress
       end
     end
   end
