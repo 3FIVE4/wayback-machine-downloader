@@ -184,8 +184,21 @@ class WaybackMachineDownloader
     puts "]"
   end
 
+  def display_progress
+    percentage_complete = (@processed_file_count.to_f / @total_files.to_f) * 100.0
+    bar_length = 50
+    filled_length = (percentage_complete * bar_length / 100).round
+    bar = '#' * filled_length + '-' * (bar_length - filled_length)
+    elapsed_time = Time.now - @start_time
+    avg_time_per_file = elapsed_time / @processed_file_count
+    remaining_files = @total_files - @processed_file_count
+    estimated_time_left = avg_time_per_file * remaining_files
+    print "\rProgress: [#{bar}] #{percentage_complete.round(2)}% - Estimated Time Left: #{estimated_time_left.round(2)}s"
+  end
+  
   def download_files
-    start_time = Time.now
+    @start_time = Time.now
+    @total_files = file_list_by_timestamp.count
     puts "Downloading #{@base_url} to #{backup_path} from Wayback Machine archives."
     puts
 
@@ -291,11 +304,13 @@ class WaybackMachineDownloader
       end
       semaphore.synchronize do
         @processed_file_count += 1
+        display_progress
         puts "#{file_url} -> #{file_path} (#{@processed_file_count}/#{file_list_by_timestamp.size})"
       end
     else
       semaphore.synchronize do
         @processed_file_count += 1
+        display_progress
         puts "#{file_url} # #{file_path} already exists. (#{@processed_file_count}/#{file_list_by_timestamp.size})"
       end
     end
