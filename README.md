@@ -3,22 +3,6 @@
 [![Gem Version](https://badge.fury.io/rb/wayback_machine_downloader.svg)](https://rubygems.org/gems/wayback_machine_downloader/)
 [![Build Status](https://travis-ci.org/hartator/wayback-machine-downloader.svg?branch=master)](https://travis-ci.org/hartator/wayback-machine-downloader)
 
-Download an entire website from the Internet Archive Wayback Machine.
-## Updates
-
-Change code here and commit changes to master
-
-open terminal:
-```
-    cd /Users/fisher-co/wayback-machine-downloader
-```
-```
-    gem build wayback_machine_downloader.gemspec
-```
-```
-    sudo gem install wayback_machine_downloader-2.3.1.gem
-```
-
 ## Installation
 
 You need to install Ruby on your system (>= 1.9.2) - if you don't already have it.
