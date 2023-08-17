@@ -193,7 +193,13 @@ class WaybackMachineDownloader
     avg_time_per_file = elapsed_time / @processed_file_count
     remaining_files = @total_files - @processed_file_count
     estimated_time_left = avg_time_per_file * remaining_files
-    print "\rProgress: [#{bar}] #{percentage_complete.round(2)}% - Estimated Time Left: #{estimated_time_left.round(2)}s"
+
+    formatted_time_left = Time.at(estimated_time_left).utc.strftime('%jD %HH %MM %SS')
+    # Subtract 1 from days (because it starts from 001)
+    formatted_time_left.gsub!(/^001D /, '')
+    formatted_time_left.gsub!(/(\d+)D/, (formatted_time_left[/(\d+)D/, 1].to_i - 1).to_s.rjust(2, '0') + 'D')
+    
+    print "\rProgress: [#{bar}] #{percentage_complete.round(2)}% - Estimated Time Left: #{formatted_time_left}"
   end
   
   def download_files
